@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Arica y Parinacota",
+    "slug": "arica-y-parinacota",
+    "centroide": [-18.47, -70.31]
+  },
+  {
+    "name": "Tarapacá",
+    "slug": "tarapaca",
+    "centroide": [-20.22, -69.78]
+  },
+  {
+    "name": "Antofagasta",
+    "slug": "antofagasta",
+    "centroide": [-23.65, -70.4]
+  },
+  {
+    "name": "Atacama",
+    "slug": "atacama",
+    "centroide": [-27.37, -70.33]
+  },
+  {
+    "name": "Coquimbo",
+    "slug": "coquimbo",
+    "centroide": [-30.6, -71.2]
+  },
+  {
+    "name": "Valparaíso",
+    "slug": "valparaiso",
+    "centroide": [-33.05, -71.62]
+  },
+  {
+    "name": "Metropolitana",
+    "slug": "metropolitana",
+    "centroide": [-33.44, -70.65]
+  },
+  {
+    "name": "O'Higgins",
+    "slug": "ohiggins",
+    "centroide": [-34.38, -71.07]
+  },
+  {
+    "name": "Maule",
+    "slug": "maule",
+    "centroide": [-35.43, -71.65]
+  },
+  {
+    "name": "Ñuble",
+    "slug": "nuble",
+    "centroide": [-36.62, -71.95]
+  },
+  {
+    "name": "Biobío",
+    "slug": "biobio",
+    "centroide": [-37.46, -72.35]
+  },
+  {
+    "name": "La Araucanía",
+    "slug": "la-araucania",
+    "centroide": [-38.74, -72.59]
+  },
+  {
+    "name": "Los Ríos",
+    "slug": "los-rios",
+    "centroide": [-39.81, -73.25]
+  },
+  {
+    "name": "Los Lagos",
+    "slug": "los-lagos",
+    "centroide": [-41.47, -72.94]
+  },
+  {
+    "name": "Aysén",
+    "slug": "aysen",
+    "centroide": [-45.57, -72.07]
+  },
+  {
+    "name": "Magallanes",
+    "slug": "magallanes",
+    "centroide": [-53.16, -70.91]
+  }
+]
