@@ -1,4 +1,5 @@
 export interface RegionIndexEntry {
+  id: number;
   name: string;
   slug: string;
   centroide: [number, number];

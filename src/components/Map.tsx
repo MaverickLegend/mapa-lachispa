@@ -7,6 +7,7 @@ export const Map = () => {
   // Estados para manejar la región seleccionada, lista de regiones, GeoJSON de la región y posición del mapa
 
   const [selectedRegion, setSelectedRegion] = useState<RegionIndexEntry | null>(null);
+  const [selectedCommune, setSelectedCommune] = useState<string | null>(null);
   const [regionesList, setRegionesList] = useState<RegionIndexEntry[]>([]);
   const [regionGeoJSON, setRegionGeoJSON] = useState<UnidadVecinalGeoJSON | null>(null);
   const [position, setPosition] = useState<[number, number]>([-33.04820461451196, -71.45584440972384]);
@@ -88,6 +89,16 @@ export const Map = () => {
             </option>
           ))}
         </select>
+        {selectedRegion && (
+          <select>
+            <option value="">Selecciona una comuna</option>
+            {regionGeoJSON?.features.map((feature) => (
+              <option key={feature.properties.t_com} value={feature.properties.t_com}>
+                {feature.properties.t_com_nom}
+              </option>
+            ))}
+          </select>
+        )}
 
         {loading && <div className="mt-1">Cargando unidades vecinales...</div>}
 
