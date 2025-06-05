@@ -1,82 +1,32 @@
 import { create } from "zustand";
-import type {
-  RegionIndexEntry,
-  UnidadVecinalFeature,
-  UnidadVecinalGeoJSON,
-} from "../components/region-selector.inteface";
+import type { RegionIndexEntry, UnidadVecinalGeoJSON } from "../components/region-selector.inteface";
 
-// Función helper para calcular centroide real de una geometría
-function calculateCentroid(geometry: any): [number, number] {
-  let totalLat = 0;
-  let totalLng = 0;
-  let pointCount = 0;
+// Importación de la interface de la store
+import type { MapStore } from "./map-store.interface";
 
-  function processCoordinates(coords: number[] | number[][] | number[][][]) {
-    if (typeof coords[0] === "number") {
-      // Es un punto [lng, lat]
-      totalLng += coords[0] as number;
-      totalLat += coords[1] as number;
-      pointCount++;
-    } else {
-      // Es un array de arrays, procesar recursivamente
-      (coords as any[]).forEach(processCoordinates);
-    }
-  }
+import { calculateCentroid } from "./calculate.centroid.helper";
 
-  if (geometry.type === "Polygon") {
-    geometry.coordinates.forEach(processCoordinates);
-  } else if (geometry.type === "MultiPolygon") {
-    geometry.coordinates.forEach((polygon: any) => {
-      polygon.forEach(processCoordinates);
-    });
-  }
+// Store de Zustand para manejar el estado del mapa y las regiones
+// Incluye la lista de regiones, GeoJSON de la región, región seleccionada, posición del mapa, etc.
 
-  return pointCount > 0 ? [totalLat / pointCount, totalLng / pointCount] : [-33.048, -71.456];
-}
-
-interface MapStore {
-  regionList: RegionIndexEntry[];
-  regionGeoJSON: UnidadVecinalGeoJSON | null;
-  selectedRegion: RegionIndexEntry | null;
-  loading: boolean;
-  position: [number, number];
-  communeList: string[];
-  selectedCommune: string | null;
-  selectedUnidadVecinal: string | null;
-  hoveredFeature: UnidadVecinalFeature | null;
-  geoJsonVersion: number;
-
-  setSelectedCommune: (commune: string | null) => void;
-  setSelectedUnidadVecinal: (uv: string | null) => void;
-  setHoveredFeature: (feature: UnidadVecinalFeature | null) => void;
-  getFilteredUVFeatures: () => UnidadVecinalFeature[];
-
-  // Actions
-  setRegionGeoJSON: (geoJSON: UnidadVecinalGeoJSON | null) => void;
-  setSelectedRegion: (region: RegionIndexEntry | null) => void;
-  setLoading: (loading: boolean) => void;
-  setRegionList: (regions: RegionIndexEntry[]) => void;
-  setPosition: (position: [number, number]) => void;
-  setCommuneList: (communes: string[]) => void;
-
-  // Async Actions
-  loadRegions: () => Promise<void>;
-  loadRegionGeoJSON: () => Promise<void>;
-}
+// Inicialización de la store con Zustand
 
 export const useMapStore = create<MapStore>((set, get) => ({
-  regionList: [],
-  regionGeoJSON: null,
-  selectedRegion: null,
-  loading: false,
-  position: [-33.048, -71.456],
-  communeList: [],
-  selectedCommune: null,
-  selectedUnidadVecinal: null,
-  hoveredFeature: null,
-  geoJsonVersion: 0,
+  regionList: [], // Inicialización de la lista de regiones
+  regionGeoJSON: null, // Inicialización del GeoJSON de la región
+  selectedRegion: null, // Inicialización de la región seleccionada
+  loading: false, // Inicialización de estado de carga para manejar peticiones asíncronas
+  position: [-33.048, -71.456], // Posición inicial del mapa (centro de Chile)
+  communeList: [], // Inicialización de la lista de comunas
+  selectedCommune: null, // Inicialización de la comuna seleccionada
+  selectedUnidadVecinal: null, // Inicialización de la unidad vecinal seleccionada
+  hoveredFeature: null, // Inicialización de la feature que está siendo hoverada
+  geoJsonVersion: 0, // Versión del GeoJSON para manejar cambios y re-renderizados
 
-  // Setters
+  // Funciones para actualizar el estado de la store desde cualquier componente que la consuma
+  // Estas funciones permiten modificar el estado de manera controlada y predecible
+  // Cada función actualiza una parte específica del estado de la store
+
   setSelectedCommune: (commune) => set({ selectedCommune: commune, selectedUnidadVecinal: null }),
   setSelectedUnidadVecinal: (uv) => set({ selectedUnidadVecinal: uv }),
   setHoveredFeature: (feature) => set({ hoveredFeature: feature }),
@@ -98,6 +48,9 @@ export const useMapStore = create<MapStore>((set, get) => ({
   setRegionList: (regions) => set({ regionList: regions }),
   setPosition: (position) => set({ position }),
 
+  // Función para obtener las features de UV filtradas según la comuna y unidad vecinal seleccionadas
+  // Una feature es un objeto que representa una unidad vecinal en el GeoJSON según la estructura del GeoJSON
+
   getFilteredUVFeatures: () => {
     const { regionGeoJSON, selectedCommune, selectedUnidadVecinal } = get();
     if (!regionGeoJSON) return [];
@@ -109,7 +62,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
       features = features.filter((f) => f.properties.t_com === selectedCommune);
     }
 
-    // : Filtrar por unidad vecinal si está seleccionada
+    //  Filtrar por unidad vecinal si está seleccionada
     if (selectedUnidadVecinal) {
       features = features.filter((f) => f.properties.t_uv_nom === selectedUnidadVecinal);
     }
@@ -117,6 +70,10 @@ export const useMapStore = create<MapStore>((set, get) => ({
     return features;
   },
 
+  // Funciones asíncronas para cargar datos desde el servidor
+  // Estas funciones permiten cargar la lista de regiones y el GeoJSON de una región específica
+
+  // Cargar la lista de regiones desde un archivo JSON (creación propia -> modificar más adelante para usar una API real)
   loadRegions: async () => {
     const { setRegionList, setLoading } = get();
     setLoading(true);
@@ -134,12 +91,19 @@ export const useMapStore = create<MapStore>((set, get) => ({
     }
   },
 
+  // Cargar el GeoJSON de la región seleccionada desde un archivo JSON
+  // Esta función se encarga de obtener el GeoJSON de la región seleccionada y actualizar el estado de la store
+  // Idealmente a futuro debería ser una llamada a una API real que devuelva el GeoJSON de la región mediante query params
+
   loadRegionGeoJSON: async () => {
     const { selectedRegion, setLoading, setRegionGeoJSON } = get();
     setLoading(true);
     try {
       if (!selectedRegion) throw new Error("No region selected");
       console.log("Cargando UV región:", selectedRegion.name);
+      // Realizar la petición al servidor para obtener el GeoJSON de la región seleccionada
+      // Usar el slug de la región para construir la URL del archivo GeoJSON
+      // El slug es un identificador único para cada región, por lo que se usa para cargar el archivo correspondiente
       const res = await fetch(`/geojson/${selectedRegion.slug}.json`);
 
       if (!res.ok) {

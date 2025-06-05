@@ -4,6 +4,8 @@ import type { FeatureCollection, Feature, Geometry, GeoJsonProperties } from "ge
 import type { LeafletMouseEvent } from "leaflet";
 
 export const MapGeoJson = () => {
+  // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado global
+  // desde la store de Zustand
   const {
     selectedRegion,
     selectedCommune,
@@ -12,12 +14,12 @@ export const MapGeoJson = () => {
     regionGeoJSON,
     setSelectedUnidadVecinal,
     setHoveredFeature,
-    setPosition,
-    geoJsonVersion, // 🔥 NUEVO: Obtener versión para el key
+    geoJsonVersion,
   } = useMapStore();
 
   if (!regionGeoJSON || !selectedRegion) return null;
 
+  // Feature collection es una funcionaliad propia de la librería GeoJSON
   // Crear FeatureCollection filtrada
   const filteredFeatures: FeatureCollection = {
     type: "FeatureCollection",
@@ -25,6 +27,7 @@ export const MapGeoJson = () => {
   };
 
   // Key con versión que se incrementa al cambiar región
+  // Esto fuerza a Leaflet a recargar el GeoJSON cuando cambia la región o UV
   const geoJsonKey = `geojson-${selectedRegion.slug}-${selectedCommune || "all"}-${
     selectedUnidadVecinal || "all"
   }-v${geoJsonVersion}`;
@@ -61,13 +64,6 @@ export const MapGeoJson = () => {
             } else {
               // Seleccionar nueva UV y centrar en ella
               setSelectedUnidadVecinal(uvName);
-
-              // Centrar el mapa en la UV seleccionada
-              const bounds = (layer as any).getBounds();
-              if (bounds) {
-                const center = bounds.getCenter();
-                setPosition([center.lat, center.lng]);
-              }
             }
 
             console.log(`UV ${isCurrentlySelected ? "deseleccionada" : "seleccionada"}: ${uvName}`);

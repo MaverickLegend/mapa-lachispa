@@ -2,14 +2,21 @@ import { useEffect } from "react";
 import { useMapStore } from "../store/useMapStore";
 
 export const RegionSelector = () => {
+  // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado
+  // desde la store de Zustand
   const { loadRegions, regionList, selectedRegion, setSelectedRegion, loadRegionGeoJSON, loading, regionGeoJSON } =
     useMapStore();
 
-  // Cargar lista de regiones al montar el componente
+  // Cargar lista de regiones al montar el componente con useEffect
+  // Esto se hace una sola vez para evitar múltiples llamadas innecesarias
 
   useEffect(() => {
     loadRegions();
   }, []);
+
+  // Función para manejar el cambio de región que se llama al seleccionar una región del dropdown con el evento onChange
+  // Esta función actualiza el estado de la región seleccionada y carga el GeoJSON de la región
+  // Llamando a la función loadRegionGeoJSON desde la store
 
   const handleRegionSelect = (slug: string) => {
     if (!slug) {
@@ -25,11 +32,11 @@ export const RegionSelector = () => {
   };
 
   return (
-    <div style={{ padding: "1rem", background: "#f0f0f0", zIndex: 1000, color: "black" }}>
+    <div className="selector-container">
       <select
+        className="selector"
         onChange={(e) => handleRegionSelect(e.target.value)}
         value={selectedRegion?.slug || ""}
-        style={{ width: "100%", background: "white", padding: "0.5rem" }}
         disabled={loading}>
         <option value="">Selecciona una región</option>
         {regionList.map((region) => (
@@ -38,6 +45,9 @@ export const RegionSelector = () => {
           </option>
         ))}
       </select>
+
+      {/* TODO */}
+      {/* Implementar componente Loader  */}
 
       {loading && <div className="mt-1">Cargando unidades vecinales...</div>}
 
