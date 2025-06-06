@@ -1,0 +1,86 @@
+@import 'leaflet/dist/leaflet.css';
+@import "tailwindcss"; 
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Selectores */
+
+.selector-container {
+  padding: 1rem;
+  background: #f0f0f0;
+  color: black;
+}
+
+.selector {
+  width: 100%;
+  background: white;
+  padding: 0.5rem;
+}
+
+/* MapView */
+
+.map-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  position: relative,
+}
+
+.sidebar {
+  width: 300px;
+  background: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.map {
+  flex: 1;
+  min-height: 400px;
+  z-index: 1;
+}
+
+/* Estilos para el contenedor principal del mapa */
+.map-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 300px;
+  background: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+/* Mapa principal */
+.map {
+  flex: 1;
+  min-height: 400px;
+  z-index: 1;
+}
