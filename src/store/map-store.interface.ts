@@ -1,5 +1,7 @@
 import type {
+  CommuneData,
   RegionIndexEntry,
+  UnidadVecinalData,
   UnidadVecinalFeature,
   UnidadVecinalGeoJSON,
 } from "../components/region-selector.inteface";
@@ -12,12 +14,16 @@ export interface MapStore {
   position: [number, number];
   communeList: string[];
   selectedCommune: string | null;
+  selectedCommuneData: CommuneData | null;
   selectedUnidadVecinal: string | null;
+  selectedUnidadVecinalData: UnidadVecinalData | null;
   hoveredFeature: UnidadVecinalFeature | null;
   geoJsonVersion: number;
 
   setSelectedCommune: (commune: string | null) => void;
+  setSelectedCommuneData: (data: CommuneData | null) => void;
   setSelectedUnidadVecinal: (uv: string | null) => void;
+  setSelectedUnidadVecinalData: (data: UnidadVecinalData | null) => void;
   setHoveredFeature: (feature: UnidadVecinalFeature | null) => void;
   getFilteredUVFeatures: () => UnidadVecinalFeature[];
 
@@ -32,4 +38,6 @@ export interface MapStore {
   // Async Actions
   loadRegions: () => Promise<void>;
   loadRegionGeoJSON: () => Promise<void>;
+  loadCommuneData: (communeCode: string) => Promise<void>;
+  loadUnidadVecinalData: (uvName: string) => Promise<void>;
 }

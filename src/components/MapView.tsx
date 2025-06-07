@@ -6,6 +6,7 @@ import { UnidadVecinalSelector } from "./UnidadVecinalSelector"; // 🔥 NUEVO
 import "leaflet/dist/leaflet.css";
 import { RegionSelector } from "./RegionSelector";
 import { CommuneSelector } from "./CommuneSelector";
+import { ShowInfo } from "./ShowInfo";
 
 export const MapView = () => {
   const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, selectedCommune } = useMapStore();
@@ -17,23 +18,17 @@ export const MapView = () => {
         <RegionSelector />
         {selectedRegion && <CommuneSelector />}
         {selectedRegion && selectedCommune && <UnidadVecinalSelector />}
-
-        {/* Panel de información */}
-        {selectedUnidadVecinal && (
-          <div className="uv-info-panel">
-            <h4>🎯 UV Seleccionada</h4>
-            <div>
-              <strong>{selectedUnidadVecinal}</strong>
-            </div>
-            <div className="uv-subtext">Click en el mapa o cambia la selección para ver otras UV</div>
-          </div>
-        )}
+        {selectedRegion && selectedCommune && <ShowInfo />}
       </div>
 
       {/* Mapa principal */}
       <MapContainer center={position} zoom={12} className="map" key={`${position[0]}-${position[1]}`}>
         <LayersControl position="topright" key={`layers-${selectedRegion?.slug || "default"}`}>
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+          {/* <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" /> */}
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
 
           {/* Capa de unidades vecinales */}
           {regionGeoJSON && selectedRegion && (

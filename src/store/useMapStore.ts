@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { RegionIndexEntry, UnidadVecinalGeoJSON } from "../components/region-selector.inteface";
+import type { CommuneData, RegionIndexEntry, UnidadVecinalGeoJSON } from "../components/region-selector.inteface";
 
 // Importación de la interface de la store
 import type { MapStore } from "./map-store.interface";
@@ -22,6 +22,8 @@ export const useMapStore = create<MapStore>((set, get) => ({
   selectedUnidadVecinal: null, // Inicialización de la unidad vecinal seleccionada
   hoveredFeature: null, // Inicialización de la feature que está siendo hoverada
   geoJsonVersion: 0, // Versión del GeoJSON para manejar cambios y re-renderizados
+  selectedCommuneData: null, // Datos de la comuna seleccionada
+  selectedUnidadVecinalData: null, // Datos de la unidad vecinal seleccionada
 
   // Funciones para actualizar el estado de la store desde cualquier componente que la consuma
   // Estas funciones permiten modificar el estado de manera controlada y predecible
@@ -31,6 +33,9 @@ export const useMapStore = create<MapStore>((set, get) => ({
   setSelectedUnidadVecinal: (uv) => set({ selectedUnidadVecinal: uv }),
   setHoveredFeature: (feature) => set({ hoveredFeature: feature }),
   setCommuneList: (communes) => set({ communeList: communes }),
+  setSelectedCommuneData: (data) => set({ selectedCommuneData: data }),
+  setSelectedUnidadVecinalData: (data) => set({ selectedUnidadVecinalData: data }),
+
   setRegionGeoJSON: (geoJSON) =>
     set((state) => ({
       regionGeoJSON: geoJSON,
@@ -117,6 +122,39 @@ export const useMapStore = create<MapStore>((set, get) => ({
       setRegionGeoJSON(null);
     } finally {
       setLoading(false);
+    }
+  },
+
+  loadCommuneData: async (communeCode: string): Promise<void> => {
+    const { setSelectedCommuneData } = get();
+    try {
+      console.log(`Cargando datos de la comuna: ${communeCode}`);
+      const res = await fetch(`datos/${communeCode}.json`);
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: No se pudo cargar los datos de la comuna ${communeCode}`);
+      }
+      const data = await res.json();
+      setSelectedCommuneData(data);
+    } catch (error) {
+      console.error("Error cargando datos de la comuna:", error);
+      setSelectedCommuneData(null);
+      throw error;
+    }
+  },
+
+  loadUnidadVecinalData: async (unidadVecinalName: string): Promise<void> => {
+    const { setSelectedUnidadVecinalData, selectedCommuneData } = get();
+    try {
+      const data = selectedCommuneData?.datos?.find(
+        (uv: any) =>
+          uv["NOMBRE UNIDAD VECINAL"].toString().trim().toLowerCase() === unidadVecinalName.trim().toLowerCase()
+      );
+
+      setSelectedUnidadVecinalData(data || null);
+    } catch (error) {
+      console.error("Error cargando datos de la unidad vecinal:", error);
+      setSelectedUnidadVecinalData(null);
+      throw error;
     }
   },
 }));

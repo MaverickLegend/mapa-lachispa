@@ -3,7 +3,15 @@ import { useMapStore } from "../store/useMapStore";
 export const UnidadVecinalSelector = () => {
   // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado
   // desde la store de Zustand
-  const { regionGeoJSON, selectedCommune, selectedUnidadVecinal, setSelectedUnidadVecinal, loading } = useMapStore();
+  const {
+    regionGeoJSON,
+    selectedCommune,
+    selectedUnidadVecinal,
+    setSelectedUnidadVecinal,
+    loading,
+    selectedUnidadVecinalData,
+    loadUnidadVecinalData,
+  } = useMapStore();
 
   // Obtener unidades vecinales disponibles (filtradas por comuna si está seleccionada)
   const unidadesVecinales = regionGeoJSON
@@ -19,8 +27,9 @@ export const UnidadVecinalSelector = () => {
   // Función para manejar el cambio de unidad vecinal
   // Esta función actualiza el estado de la unidad vecinal seleccionada
   // y se llama al seleccionar una unidad vecinal del dropdown con el evento onChange
-  const handleUVChange = (uvName: string | null) => {
+  const handleUVChange = (uvName: string) => {
     setSelectedUnidadVecinal(uvName);
+    loadUnidadVecinalData(uvName);
   };
 
   if (!regionGeoJSON) return null;
@@ -29,7 +38,7 @@ export const UnidadVecinalSelector = () => {
     <div className="selector-container">
       <select
         className="selector"
-        onChange={(e) => handleUVChange(e.target.value || null)}
+        onChange={(e) => handleUVChange(e.target.value)}
         value={selectedUnidadVecinal || ""}
         disabled={loading}>
         <option value="">{selectedCommune ? "Todas las UV de la comuna" : "Todas las unidades vecinales"}</option>
