@@ -4,7 +4,7 @@ import { RegionSelector } from "./RegionSelector";
 import { UnidadVecinalSelector } from "./UnidadVecinalSelector";
 
 export const FilterBar = () => {
-  const { setSelectedRegion } = useMapStore();
+  const { clearFilters } = useMapStore();
   // Esta función se encarga de limpiar la selección de región}
 
   return (
@@ -16,7 +16,7 @@ export const FilterBar = () => {
       <h1>Implementar filtro JJVV</h1>
       <h1>Implementar ubicación</h1>
       <div>
-        <button onClick={() => setSelectedRegion(null)} className="btn">
+        <button onClick={clearFilters()} className="btn">
           Limpiar selección
         </button>
       </div>

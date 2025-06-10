@@ -4,13 +4,22 @@ import { useMapStore, calculateCentroid } from "../store/useMapStore";
 export const CommuneSelector = () => {
   // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado
   // desde la store de Zustand
-  const { regionGeoJSON, selectedCommune, setSelectedCommune, loading, setPosition, selectedRegion, loadCommuneData } =
-    useMapStore();
+  const {
+    regionGeoJSON,
+    selectedCommune,
+    setSelectedCommune,
+    loading,
+    setPosition,
+    selectedRegion,
+    loadCommuneData,
+    loadJuntasVecinos,
+  } = useMapStore();
 
   // Variable para almacenar la lista de comunas de la región actual
   // Se obtiene del GeoJSON de la región cargado en la store
   // Se usa un Map para eliminar duplicados y luego se convierte a un array de objetos con código y nombre
   // Se ordena alfabéticamente por nombre de comuna
+
   const communes = regionGeoJSON
     ? Array.from(new Map(regionGeoJSON.features.map((f) => [f.properties.t_com, f.properties.t_com_nom])).entries())
         .map(([code, name]) => ({ code, name }))
@@ -37,7 +46,8 @@ export const CommuneSelector = () => {
     setSelectedCommune(communeCode);
 
     console.log(communeCode);
-    loadCommuneData(communeCode || ""); // Cargar datos de la comuna seleccionada
+    loadCommuneData(communeCode || "");
+    loadJuntasVecinos(communeCode || ""); // Cargar datos de la comuna seleccionada
     // Resetear datos de comuna seleccionada
 
     // Si se selecciona una comuna, centrar el mapa en su centroide

@@ -1,4 +1,4 @@
-import { GeoJSON, Tooltip, Popup } from "react-leaflet";
+import { GeoJSON } from "react-leaflet";
 import { useMapStore } from "../store/useMapStore";
 import type { FeatureCollection, Feature, Geometry, GeoJsonProperties } from "geojson";
 import type { LeafletMouseEvent } from "leaflet";
@@ -97,11 +97,6 @@ export const MapGeoJson = () => {
               <hr style="margin: 8px 0; border: none; border-top: 1px solid #ecf0f1;">
               <div style="font-size: 12px; color: #7f8c8d;">
                 <div style="margin: 4px 0;"><strong>Comuna:</strong> ${props.t_com_nom || "N/A"}</div>
-                <div style="margin: 4px 0;"><strong>Provincia:</strong> ${props.t_prov_nom || "N/A"}</div>
-                <div style="margin: 4px 0;"><strong>Región:</strong> ${props.t_reg_nom || "N/A"}</div>
-              </div>
-              <div style="font-size: 11px; color: #95a5a6; margin-top: 8px; font-style: italic;">
-                Click para aislar esta unidad vecinal
               </div>
             </div>`,
             {
@@ -109,22 +104,6 @@ export const MapGeoJson = () => {
               direction: "top",
               offset: [0, -10],
               className: "custom-tooltip",
-            }
-          );
-
-          // Opcional: También puedes agregar un Popup para información adicional
-          layer.bindPopup(
-            `<div style="font-family: Arial, sans-serif;">
-              <h3 style="margin: 0 0 10px 0; color: #2c3e50;">${props.t_uv_nom}</h3>
-              <div style="font-size: 13px;">
-                <p><strong>Comuna:</strong> ${props.t_com_nom || "N/A"}</p>
-                <p><strong>Provincia:</strong> ${props.t_prov_nom || "N/A"}</p>
-                <p><strong>Región:</strong> ${props.t_reg_nom || "N/A"}</p>
-              </div>
-            </div>`,
-            {
-              maxWidth: 250,
-              className: "custom-popup",
             }
           );
         }

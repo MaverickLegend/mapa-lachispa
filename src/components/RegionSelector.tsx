@@ -4,8 +4,7 @@ import { useMapStore } from "../store/useMapStore";
 export const RegionSelector = () => {
   // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado
   // desde la store de Zustand
-  const { loadRegions, regionList, selectedRegion, setSelectedRegion, loadRegionGeoJSON, loading, regionGeoJSON } =
-    useMapStore();
+  const { loadRegions, regionList, selectedRegion, setSelectedRegion, loadRegionGeoJSON, loading } = useMapStore();
 
   // Cargar lista de regiones al montar el componente con useEffect
   // Esto se hace una sola vez para evitar múltiples llamadas innecesarias
@@ -48,16 +47,6 @@ export const RegionSelector = () => {
 
       {/* TODO */}
       {/* Implementar componente Loader  */}
-
-      {/* {loading && <div className="mt-1">Cargando unidades vecinales...</div>} */}
-
-      {/* {selectedRegion && regionGeoJSON && (
-        <div style={{ marginTop: "1rem", fontSize: "0.8rem" }}>
-          <strong>{selectedRegion.name}</strong>
-          <br />
-          Unidades vecinales: {regionGeoJSON.features.length}
-        </div>
-      )} */}
     </div>
   );
 };

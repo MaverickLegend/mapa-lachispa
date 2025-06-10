@@ -5,6 +5,7 @@ import type {
   UnidadVecinalFeature,
   UnidadVecinalGeoJSON,
 } from "../components/region-selector.inteface";
+import type { JuntaVecinal } from "../components/juntas-vecinos.interface";
 
 export interface MapStore {
   regionList: RegionIndexEntry[];
@@ -19,6 +20,7 @@ export interface MapStore {
   selectedUnidadVecinalData: UnidadVecinalData | null;
   hoveredFeature: UnidadVecinalFeature | null;
   geoJsonVersion: number;
+  juntasVecinos: JuntaVecinal[];
 
   setSelectedCommune: (commune: string | null) => void;
   setSelectedCommuneData: (data: CommuneData | null) => void;
@@ -26,6 +28,7 @@ export interface MapStore {
   setSelectedUnidadVecinalData: (data: UnidadVecinalData | null) => void;
   setHoveredFeature: (feature: UnidadVecinalFeature | null) => void;
   getFilteredUVFeatures: () => UnidadVecinalFeature[];
+  setSelectedJuntasVecinos: (data: JuntaVecinal[]) => void;
 
   // Actions
   setRegionGeoJSON: (geoJSON: UnidadVecinalGeoJSON | null) => void;
@@ -34,10 +37,12 @@ export interface MapStore {
   setRegionList: (regions: RegionIndexEntry[]) => void;
   setPosition: (position: [number, number]) => void;
   setCommuneList: (communes: string[]) => void;
+  clearFilters(): () => void;
 
   // Async Actions
   loadRegions: () => Promise<void>;
   loadRegionGeoJSON: () => Promise<void>;
   loadCommuneData: (communeCode: string) => Promise<void>;
   loadUnidadVecinalData: (uvName: string) => Promise<void>;
+  loadJuntasVecinos: (communCode: string) => Promise<void>;
 }

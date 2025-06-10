@@ -79,4 +79,23 @@
   background-color: #0056b3;
 }
 
+.show-info-container{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 0.2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 /* ShowInfoComponent */
