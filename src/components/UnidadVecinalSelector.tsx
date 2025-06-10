@@ -9,7 +9,6 @@ export const UnidadVecinalSelector = () => {
     selectedUnidadVecinal,
     setSelectedUnidadVecinal,
     loading,
-    selectedUnidadVecinalData,
     loadUnidadVecinalData,
   } = useMapStore();
 
@@ -32,15 +31,13 @@ export const UnidadVecinalSelector = () => {
     loadUnidadVecinalData(uvName);
   };
 
-  if (!regionGeoJSON) return null;
-
   return (
     <div className="selector-container">
       <select
         className="selector"
         onChange={(e) => handleUVChange(e.target.value)}
         value={selectedUnidadVecinal || ""}
-        disabled={loading}>
+        disabled={loading || !regionGeoJSON}>
         <option value="">{selectedCommune ? "Todas las UV de la comuna" : "Todas las unidades vecinales"}</option>
         {unidadesVecinales.map((uv, index) => (
           <option key={`${uv.name}-${index}`} value={uv.name}>
@@ -49,27 +46,7 @@ export const UnidadVecinalSelector = () => {
         ))}
       </select>
 
-      {/* Info adicional */}
-      {selectedUnidadVecinal && (
-        <div style={{ fontSize: "0.8rem", marginTop: "0.5rem", color: "#666" }}>
-          📍 UV seleccionada: <strong>{selectedUnidadVecinal}</strong>
-          <br />
-          <button
-            onClick={() => setSelectedUnidadVecinal(null)}
-            style={{
-              fontSize: "0.7rem",
-              padding: "2px 8px",
-              marginTop: "4px",
-              background: "#ff6b35",
-              color: "white",
-              border: "none",
-              borderRadius: "3px",
-              cursor: "pointer",
-            }}>
-            Limpiar selección
-          </button>
-        </div>
-      )}
+
     </div>
   );
 };

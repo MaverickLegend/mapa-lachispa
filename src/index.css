@@ -23,9 +23,10 @@
 /* Selectores */
 
 .selector-container {
-  padding: 1rem;
+  padding: 0.5rem;
   background: #f0f0f0;
   color: black;
+  border-radius: 0.1rem;
 }
 
 .selector {
@@ -34,63 +35,48 @@
   padding: 0.5rem;
 }
 
-/* MapView */
+.map {
+  flex: 1;
+  height: auto;
+  z-index: 1;
+  border-radius: 0.2rem;
+  border: solid 1px #ccc;
+}
 
 .map-container {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  width: 100vw;
-  position: relative,
+  height: 100%;
+  width: 100%;
 }
 
-.sidebar {
-  width: 300px;
-  background: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-.map {
-  flex: 1;
-  min-height: 400px;
-  z-index: 1;
-}
-
-/* Estilos para el contenedor principal del mapa */
-.map-container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-}
-
-/* Sidebar styles */
-.sidebar {
-  width: 300px;
-  background: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-/* Mapa principal */
-.map {
-  flex: 1;
-  min-height: 400px;
-  z-index: 1;
-}
 
 .uv-info-panel{
+  background-color: white;
   color: black;
   padding: 1rem;
   font-size: 0.8rem;
 }
 
+.filterbar-container{
+  display: grid;
+  padding: 0.5rem;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+}
 
+.btn{
+  padding: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn:hover{
+  background-color: #0056b3;
+}
 
 /* ShowInfoComponent */

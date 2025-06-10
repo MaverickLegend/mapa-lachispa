@@ -49,15 +49,15 @@ export const RegionSelector = () => {
       {/* TODO */}
       {/* Implementar componente Loader  */}
 
-      {loading && <div className="mt-1">Cargando unidades vecinales...</div>}
+      {/* {loading && <div className="mt-1">Cargando unidades vecinales...</div>} */}
 
-      {selectedRegion && regionGeoJSON && (
+      {/* {selectedRegion && regionGeoJSON && (
         <div style={{ marginTop: "1rem", fontSize: "0.8rem" }}>
           <strong>{selectedRegion.name}</strong>
           <br />
           Unidades vecinales: {regionGeoJSON.features.length}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

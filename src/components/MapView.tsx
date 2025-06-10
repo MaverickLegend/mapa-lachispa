@@ -2,24 +2,21 @@ import { MapContainer, TileLayer, Marker, Popup, LayersControl } from "react-lea
 import type { LatLngExpression } from "leaflet";
 import { useMapStore } from "../store/useMapStore";
 import { MapGeoJson } from "./MapGeoJson";
-import { UnidadVecinalSelector } from "./UnidadVecinalSelector"; // 🔥 NUEVO
 import "leaflet/dist/leaflet.css";
-import { RegionSelector } from "./RegionSelector";
-import { CommuneSelector } from "./CommuneSelector";
 import { ShowInfo } from "./ShowInfo";
 
 export const MapView = () => {
-  const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, selectedCommune } = useMapStore();
+  const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal } = useMapStore();
 
   return (
     <div className="map-container">
-      {/* Sidebar*/}
+      {/* Sidebar
       <div className="sidebar">
         <RegionSelector />
         {selectedRegion && <CommuneSelector />}
         {selectedRegion && selectedCommune && <UnidadVecinalSelector />}
         {selectedRegion && selectedCommune && <ShowInfo />}
-      </div>
+      </div> */}
 
       {/* Mapa principal */}
       <MapContainer center={position} zoom={12} className="map" key={`${position[0]}-${position[1]}`}>
