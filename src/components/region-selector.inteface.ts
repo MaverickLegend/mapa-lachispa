@@ -38,6 +38,8 @@ export interface CommuneData {
 }
 
 export interface UnidadVecinalData {
+  "NOMBRE UNIDAD VECINAL": number;
+  "N° UNIDAD VECINAL": number;
   "Número total de personas": number;
   "Total de Hombres": number;
   "Total de Mujeres": number;
