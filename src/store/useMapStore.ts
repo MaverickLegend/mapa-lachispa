@@ -92,7 +92,8 @@ export const useMapStore = create<MapStore>((set, get) => ({
   },
 
   loadCommuneData: async (communeCode: string): Promise<void> => {
-    const { setSelectedCommuneData } = get();
+    const { setSelectedCommuneData, setLoading } = get();
+    setLoading(true);
     try {
       const res = await fetch(`datos/${communeCode}.json`);
       if (!res.ok) throw new Error(`Error ${res.status}: No se pudo cargar los datos de la comuna ${communeCode}`);
@@ -102,11 +103,14 @@ export const useMapStore = create<MapStore>((set, get) => ({
       console.error("Error cargando datos de la comuna:", error);
       setSelectedCommuneData(null);
       throw error;
+    } finally {
+      setLoading(false);
     }
   },
 
   loadUnidadVecinalData: async (unidadVecinalName: string): Promise<void> => {
-    const { setSelectedUnidadVecinalData, selectedCommuneData } = get();
+    const { setSelectedUnidadVecinalData, selectedCommuneData, setLoading } = get();
+    setLoading(true);
     try {
       const data = selectedCommuneData?.datos?.find(
         (uv: any) =>
@@ -117,6 +121,8 @@ export const useMapStore = create<MapStore>((set, get) => ({
       console.error("Error cargando datos de la unidad vecinal:", error);
       setSelectedUnidadVecinalData(null);
       throw error;
+    } finally {
+      setLoading(false);
     }
   },
 

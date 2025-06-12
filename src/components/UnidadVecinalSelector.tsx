@@ -45,8 +45,6 @@ export const UnidadVecinalSelector = () => {
           </option>
         ))}
       </select>
-
-
     </div>
   );
 };

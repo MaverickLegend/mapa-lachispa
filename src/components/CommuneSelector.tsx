@@ -13,6 +13,7 @@ export const CommuneSelector = () => {
     selectedRegion,
     loadCommuneData,
     loadJuntasVecinos,
+    setSelectedUnidadVecinalData,
   } = useMapStore();
 
   // Variable para almacenar la lista de comunas de la región actual
@@ -44,7 +45,7 @@ export const CommuneSelector = () => {
   const handleCommuneChange = (communeCode: string | null) => {
     // Actualizar la comuna seleccionada en el estado global
     setSelectedCommune(communeCode);
-
+    setSelectedUnidadVecinalData(null);
     console.log(communeCode);
     loadCommuneData(communeCode || "");
     loadJuntasVecinos(communeCode || ""); // Cargar datos de la comuna seleccionada

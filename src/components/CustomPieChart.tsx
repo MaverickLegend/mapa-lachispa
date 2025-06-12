@@ -24,14 +24,14 @@ export const CustomPieChart = ({ data, colors = ["#0088FE", "#00C49F"] }: Custom
   }
 
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div className="w-full h-80 items-center justify-center">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            outerRadius={100}
+            outerRadius={110}
             fill="#8884d8"
             dataKey="value"
             label={label}

@@ -26,7 +26,7 @@ export const CustomBarChart = ({ data, colors = ["#0088FE"] }: CustomBarChartPro
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart layout="vertical" data={dataWithPercentages} margin={{ top: 20, right: 30, left: 30, bottom: 20 }}>
+        <BarChart layout="vertical" data={dataWithPercentages}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" domain={[0, 100]} tickFormatter={(value: number) => `${value.toFixed(0)}%`} />
           <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 12 }} />

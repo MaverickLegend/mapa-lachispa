@@ -16,7 +16,7 @@ export const Layout: React.FC<{ children: ReactNode }> = () => {
         <ShowInfo />
       </main>
       <footer className="bg-gray-800 text-white text-center p-4">
-        <p>© 2023 Tu Empresa. Todos los derechos reservados.</p>
+        <p>© 2025 La Chispa Digital. Todos los derechos reservados.</p>
       </footer>
     </div>
   );
