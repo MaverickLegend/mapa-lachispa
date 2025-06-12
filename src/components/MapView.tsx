@@ -15,10 +15,10 @@ export const MapView = () => {
     <div className="map-container">
       {/* Sidebar*/}
       <div className="sidebar">
+        <AddressSearch />
         <RegionSelector />
         {selectedRegion && <CommuneSelector />}
         {selectedRegion && selectedCommune && <UnidadVecinalSelector />}
-        {selectedRegion && regionGeoJSON && <AddressSearch />}
 
         {/* Panel de información */}
         {selectedUnidadVecinal && (

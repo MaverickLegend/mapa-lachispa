@@ -1,60 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMapStore } from "../store/useMapStore";
-import * as turf from "@turf/turf";
 
 export const AddressSearch = () => {
-  const [address, setAddress] = useState("");
-  const { regionGeoJSON, setSelectedUnidadVecinal } = useMapStore();
+  const [query, setQuery] = useState("");
+  const { setPosition } = useMapStore();
 
   const handleSearch = async () => {
-    if (!address || !regionGeoJSON) return;
-
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
-      );
-      const results = await response.json();
-
-      if (!results || results.length === 0) {
-        alert("Dirección no encontrada.");
-        return;
-      }
-
-      const [lon, lat] = [parseFloat(results[0].lon), parseFloat(results[0].lat)];
-      const point = turf.point([lon, lat]);
-
-      let closestUV = null;
-      let minDistance = Infinity;
-
-      for (const feature of regionGeoJSON.features) {
-        const polygon = turf.feature(feature.geometry);
-        const distance = turf.pointToPolygonDistance(point, polygon, { units: "kilometers" });
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestUV = feature;
-        }
-      }
-
-      if (closestUV) {
-        setSelectedUnidadVecinal(closestUV.properties.name); // o el campo que uses
-      } else {
-        alert("No se encontró una unidad vecinal cercana.");
-      }
-    } catch (err) {
-      console.error("Error al buscar dirección:", err);
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    if (data.length > 0) {
+      const { lat, lon } = data[0];
+      const newPos = [parseFloat(lat), parseFloat(lon)];
+      setPosition(newPos); // actualiza el centro del mapa
+      // También podrías disparar una función para encontrar la UV más cercana
     }
   };
 
   return (
-    <div className="address-search">
+    <div className="selector-container">
       <input
         type="text"
-        placeholder="Buscar dirección..."
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
+        placeholder="Busca tu dirección..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        color="red"
       />
-      <button onClick={handleSearch}>Buscar UV más cercana</button>
+      <button onClick={handleSearch}>Buscar</button>
     </div>
   );
 };
