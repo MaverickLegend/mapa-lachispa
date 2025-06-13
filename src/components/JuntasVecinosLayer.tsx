@@ -21,12 +21,27 @@ const defaultIcon = L.icon({
 L.Marker.prototype.options.icon = defaultIcon;
 
 export const JuntasVecinosLayer = () => {
+<<<<<<< HEAD
   const { juntasVecinos } = useMapStore();
 
   const juntasConCoordenadas = juntasVecinos.filter((junta) => junta.latitud !== null && junta.longitud !== null);
 
   return (
     <MarkerClusterGroup showCoverageOnHover={false}>
+=======
+  const { juntasVecinos, filtroNombreJJVV } = useMapStore();
+
+  let juntasConCoordenadas = juntasVecinos.filter((junta) => junta.latitud !== null && junta.longitud !== null);
+
+  if (filtroNombreJJVV.trim() !== "") {
+    juntasConCoordenadas = juntasConCoordenadas.filter((junta) =>
+      junta.nombre.toLowerCase().includes(filtroNombreJJVV.toLowerCase())
+    );
+  }
+
+  return (
+    <MarkerClusterGroup key={filtroNombreJJVV} showCoverageOnHover={false}>
+>>>>>>> dev/zbastian
       {juntasConCoordenadas.map((junta, index) => (
         <Marker key={index} position={[junta.latitud as number, junta.longitud as number]}>
           <Popup>

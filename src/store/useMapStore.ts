@@ -18,6 +18,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   geoJsonVersion: 0,
   selectedCommuneData: null,
   selectedUnidadVecinalData: null,
+  filtroNombreJJVV: "",
 
   setSelectedCommune: (commune) => set({ selectedCommune: commune, selectedUnidadVecinal: null }),
   setSelectedUnidadVecinal: (uv) => set({ selectedUnidadVecinal: uv }),
@@ -45,6 +46,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   setLoading: (loading) => set({ loading }),
   setRegionList: (regions) => set({ regionList: regions }),
   setPosition: (position) => set({ position }),
+  setFiltroNombreJJVV: (filtro) => set({ filtroNombreJJVV: filtro }),
 
   getFilteredUVFeatures: () => {
     const { regionGeoJSON, selectedCommune, selectedUnidadVecinal } = get();
@@ -146,10 +148,12 @@ export const useMapStore = create<MapStore>((set, get) => ({
       selectedRegion: null,
       selectedCommune: null,
       selectedUnidadVecinal: null,
+      regionGeoJSON: null,
+      juntasVecinos: [],
+      filtroNombreJJVV: "",
       selectedCommuneData: null,
       selectedUnidadVecinalData: null,
-      regionGeoJSON: null,
-      position: [-33.048, -71.456],
+      // No limpiar position para que el mapa no se mueva
     }),
 }));
 

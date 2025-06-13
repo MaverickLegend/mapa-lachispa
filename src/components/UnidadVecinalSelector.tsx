@@ -32,19 +32,17 @@ export const UnidadVecinalSelector = () => {
   };
 
   return (
-    <div className="selector-container">
-      <select
-        className="selector"
-        onChange={(e) => handleUVChange(e.target.value)}
-        value={selectedUnidadVecinal || ""}
-        disabled={loading || !regionGeoJSON}>
-        <option value="">{selectedCommune ? "Todas las UV de la comuna" : "Todas las unidades vecinales"}</option>
-        {unidadesVecinales.map((uv, index) => (
-          <option key={`${uv.name}-${index}`} value={uv.name}>
-            {uv.name} {!selectedCommune && `(${uv.commune})`}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      className="w-full px-3 py-2 bg-slate-700 text-gray-200 border border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm placeholder-slate-400"
+      onChange={(e) => handleUVChange(e.target.value)}
+      value={selectedUnidadVecinal || ""}
+      disabled={loading || !regionGeoJSON}>
+      <option value="">{selectedCommune ? "Todas las UV de la comuna" : "Todas las unidades vecinales"}</option>
+      {unidadesVecinales.map((uv, index) => (
+        <option key={`${uv.name}-${index}`} value={uv.name}>
+          {uv.name} {!selectedCommune && `(${uv.commune})`}
+        </option>
+      ))}
+    </select>
   );
 };

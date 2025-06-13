@@ -21,6 +21,7 @@ export interface MapStore {
   hoveredFeature: UnidadVecinalFeature | null;
   geoJsonVersion: number;
   juntasVecinos: JuntaVecinal[];
+  filtroNombreJJVV: string;
 
   setSelectedCommune: (commune: string | null) => void;
   setSelectedCommuneData: (data: CommuneData | null) => void;
@@ -37,6 +38,7 @@ export interface MapStore {
   setRegionList: (regions: RegionIndexEntry[]) => void;
   setPosition: (position: [number, number]) => void;
   setCommuneList: (communes: string[]) => void;
+  setFiltroNombreJJVV: (filtro: string) => void;
   clearFilters(): () => void;
 
   // Async Actions
