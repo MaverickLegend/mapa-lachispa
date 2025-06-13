@@ -151,6 +151,8 @@ export const useMapStore = create<MapStore>((set, get) => ({
       regionGeoJSON: null,
       juntasVecinos: [],
       filtroNombreJJVV: "",
+      selectedCommuneData: null,
+      selectedUnidadVecinalData: null,
       // No limpiar position para que el mapa no se mueva
     }),
 }));

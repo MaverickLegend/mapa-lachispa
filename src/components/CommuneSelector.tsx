@@ -86,19 +86,17 @@ export const CommuneSelector = () => {
   };
 
   return (
-    <div className="selector-container">
-      <select
-        onChange={(e) => handleCommuneChange(e.target.value || null)}
-        value={selectedCommune || ""}
-        disabled={loading || !regionGeoJSON}
-        className="selector">
-        <option value="">Todas las comunas</option>
-        {communes.map((commune) => (
-          <option key={commune.code} value={commune.code}>
-            {commune.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      onChange={(e) => handleCommuneChange(e.target.value || null)}
+      value={selectedCommune || ""}
+      disabled={loading || !regionGeoJSON}
+      className="w-full px-3 py-2 bg-slate-700 text-gray-200 border border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm placeholder-slate-400">
+      <option value="">Todas las comunas</option>
+      {communes.map((commune) => (
+        <option key={commune.code} value={commune.code}>
+          {commune.name}
+        </option>
+      ))}
+    </select>
   );
 };
