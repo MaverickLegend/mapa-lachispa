@@ -14,6 +14,7 @@ export interface MapStore {
   loading: boolean;
   position: [number, number];
   communeList: string[];
+  selectedProvince: string | null;
   selectedCommune: string | null;
   selectedCommuneData: CommuneData | null;
   selectedUnidadVecinal: string | null;
@@ -23,6 +24,7 @@ export interface MapStore {
   juntasVecinos: JuntaVecinal[];
   filtroNombreJJVV: string;
 
+  setSelectedProvince: (province: string | null) => void;
   setSelectedCommune: (commune: string | null) => void;
   setSelectedCommuneData: (data: CommuneData | null) => void;
   setSelectedUnidadVecinal: (uv: string | null) => void;

@@ -12,6 +12,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   loading: false,
   position: [-33.048, -71.456],
   communeList: [],
+  selectedProvince: null,
   selectedCommune: null,
   selectedUnidadVecinal: null,
   hoveredFeature: null,
@@ -20,6 +21,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   selectedUnidadVecinalData: null,
   filtroNombreJJVV: "",
 
+  setSelectedProvince: (province) => set({ selectedProvince: province }),
   setSelectedCommune: (commune) => set({ selectedCommune: commune, selectedUnidadVecinal: null }),
   setSelectedUnidadVecinal: (uv) => set({ selectedUnidadVecinal: uv }),
   setHoveredFeature: (feature) => set({ hoveredFeature: feature }),
@@ -49,9 +51,12 @@ export const useMapStore = create<MapStore>((set, get) => ({
   setFiltroNombreJJVV: (filtro) => set({ filtroNombreJJVV: filtro }),
 
   getFilteredUVFeatures: () => {
-    const { regionGeoJSON, selectedCommune, selectedUnidadVecinal } = get();
+    const { regionGeoJSON, selectedCommune, selectedUnidadVecinal, selectedProvince } = get();
     if (!regionGeoJSON) return [];
     let features = regionGeoJSON.features;
+    if (selectedProvince) {
+      features = features.filter((f) => f.properties.t_prov_nom === selectedProvince);
+    }
     if (selectedCommune) {
       features = features.filter((f) => f.properties.t_com === selectedCommune);
     }
@@ -146,6 +151,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   clearFilters: () => () =>
     set({
       selectedRegion: null,
+      selectedProvince: null,
       selectedCommune: null,
       selectedUnidadVecinal: null,
       regionGeoJSON: null,

@@ -12,7 +12,7 @@ export const MapView = () => {
   return (
     <div className="map-container">
       {/* Mapa principal */}
-      <MapContainer center={position} zoom={12} className="map" key={`${position[0]}-${position[1]}`}>
+      <MapContainer center={position} zoom={10} className="map" key={`${position[0]}-${position[1]}`}>
         <LayersControl position="topright" key={`layers-${selectedRegion?.slug || "default"}`}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
