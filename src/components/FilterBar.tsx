@@ -3,6 +3,7 @@ import { CommuneSelector } from "./CommuneSelector";
 import { RegionSelector } from "./RegionSelector";
 import { UnidadVecinalSelector } from "./UnidadVecinalSelector";
 import { FiltroJJVV } from "./FiltroJJVV";
+import { AddressSearch } from "./AddressSearch";
 
 export const FilterBar = () => {
   const { clearFilters } = useMapStore();
@@ -15,7 +16,7 @@ export const FilterBar = () => {
       <CommuneSelector />
       <UnidadVecinalSelector />
       <FiltroJJVV />
-      <h1>Implementar ubicación</h1>
+      <AddressSearch />
       <div>
         <button
           onClick={clearFilters()}
