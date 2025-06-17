@@ -4,8 +4,7 @@ import { useMapStore } from "../store/useMapStore";
 export const RegionSelector = () => {
   // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado
   // desde la store de Zustand
-  const { loadRegions, regionList, selectedRegion, setSelectedRegion, loadRegionGeoJSON, loading, regionGeoJSON } =
-    useMapStore();
+  const { loadRegions, regionList, selectedRegion, setSelectedRegion, loadRegionGeoJSON, loading } = useMapStore();
 
   // Cargar lista de regiones al montar el componente con useEffect
   // Esto se hace una sola vez para evitar múltiples llamadas innecesarias
@@ -32,32 +31,19 @@ export const RegionSelector = () => {
   };
 
   return (
-    <div className="selector-container">
-      <select
-        className="selector"
-        onChange={(e) => handleRegionSelect(e.target.value)}
-        value={selectedRegion?.slug || ""}
-        disabled={loading}>
-        <option value="">Selecciona una región</option>
-        {regionList.map((region) => (
-          <option key={region.id} value={region.slug}>
-            {region.name}
-          </option>
-        ))}
-      </select>
-
+    <select
+      className="w-full px-3 py-2 bg-slate-700 text-gray-200 border border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm placeholder-slate-400"
+      onChange={(e) => handleRegionSelect(e.target.value)}
+      value={selectedRegion?.slug || ""}
+      disabled={loading}>
+      <option value="">Selecciona una región</option>
+      {regionList.map((region) => (
+        <option key={region.id} value={region.slug}>
+          {region.name}
+        </option>
+      ))}
       {/* TODO */}
       {/* Implementar componente Loader  */}
-
-      {loading && <div className="mt-1">Cargando unidades vecinales...</div>}
-
-      {selectedRegion && regionGeoJSON && (
-        <div style={{ marginTop: "1rem", fontSize: "0.8rem" }}>
-          <strong>{selectedRegion.name}</strong>
-          <br />
-          Unidades vecinales: {regionGeoJSON.features.length}
-        </div>
-      )}
-    </div>
+    </select>
   );
 };

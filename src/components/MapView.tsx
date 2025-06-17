@@ -2,42 +2,31 @@ import { MapContainer, TileLayer, Marker, Popup, LayersControl } from "react-lea
 import type { LatLngExpression } from "leaflet";
 import { useMapStore } from "../store/useMapStore";
 import { MapGeoJson } from "./MapGeoJson";
-import { UnidadVecinalSelector } from "./UnidadVecinalSelector"; // 🔥 NUEVO
 import "leaflet/dist/leaflet.css";
-import { RegionSelector } from "./RegionSelector";
-import { CommuneSelector } from "./CommuneSelector";
-import { AddressSearch } from "./AddressSearch";
+import { JuntasVecinosLayer } from "./JuntasVecinosLayer";
 
 export const MapView = () => {
-  const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, selectedCommune } = useMapStore();
+  const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, juntasVecinos, selectedCommune } =
+    useMapStore();
 
   return (
     <div className="map-container">
-      {/* Sidebar*/}
-      <div className="sidebar">
-        <AddressSearch />
-        <RegionSelector />
-        {selectedRegion && <CommuneSelector />}
-        {selectedRegion && selectedCommune && <UnidadVecinalSelector />}
-
-        {/* Panel de información */}
-        {selectedUnidadVecinal && (
-          <div className="uv-info-panel">
-            <h4>🎯 UV Seleccionada</h4>
-            <div>
-              <strong>{selectedUnidadVecinal}</strong>
-            </div>
-            <div className="uv-subtext">Click en el mapa o cambia la selección para ver otras UV</div>
-          </div>
-        )}
-      </div>
-
       {/* Mapa principal */}
       <MapContainer center={position} zoom={12} className="map" key={`${position[0]}-${position[1]}`}>
         <LayersControl position="topright" key={`layers-${selectedRegion?.slug || "default"}`}>
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
 
-          {/* Capa de unidades vecinales */}
+          {/* Capa de Juntas de Vecinos */}
+          {selectedCommune && juntasVecinos && (
+            <LayersControl.Overlay name={`Juntas de Vecinos - ${selectedCommune}`} checked>
+              <JuntasVecinosLayer />
+            </LayersControl.Overlay>
+          )}
+
+          {/* Capa de Unidades Vecinales */}
           {regionGeoJSON && selectedRegion && (
             <LayersControl.Overlay name={`Unidades Vecinales - ${selectedRegion.name}`} checked>
               <MapGeoJson />

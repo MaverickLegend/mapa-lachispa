@@ -4,12 +4,23 @@ import { useMapStore, calculateCentroid } from "../store/useMapStore";
 export const CommuneSelector = () => {
   // Obtener el estado de la región, comuna seleccionada, GeoJSON de la región y funciones para actualizar el estado
   // desde la store de Zustand
-  const { regionGeoJSON, selectedCommune, setSelectedCommune, loading, setPosition, selectedRegion } = useMapStore();
+  const {
+    regionGeoJSON,
+    selectedCommune,
+    setSelectedCommune,
+    loading,
+    setPosition,
+    selectedRegion,
+    loadCommuneData,
+    loadJuntasVecinos,
+    setSelectedUnidadVecinalData,
+  } = useMapStore();
 
   // Variable para almacenar la lista de comunas de la región actual
   // Se obtiene del GeoJSON de la región cargado en la store
   // Se usa un Map para eliminar duplicados y luego se convierte a un array de objetos con código y nombre
   // Se ordena alfabéticamente por nombre de comuna
+
   const communes = regionGeoJSON
     ? Array.from(new Map(regionGeoJSON.features.map((f) => [f.properties.t_com, f.properties.t_com_nom])).entries())
         .map(([code, name]) => ({ code, name }))
@@ -34,6 +45,11 @@ export const CommuneSelector = () => {
   const handleCommuneChange = (communeCode: string | null) => {
     // Actualizar la comuna seleccionada en el estado global
     setSelectedCommune(communeCode);
+    setSelectedUnidadVecinalData(null);
+    console.log(communeCode);
+    loadCommuneData(communeCode || "");
+    loadJuntasVecinos(communeCode || ""); // Cargar datos de la comuna seleccionada
+    // Resetear datos de comuna seleccionada
 
     // Si se selecciona una comuna, centrar el mapa en su centroide
     if (communeCode && regionGeoJSON) {
@@ -70,19 +86,17 @@ export const CommuneSelector = () => {
   };
 
   return (
-    <div className="selector-container">
-      <select
-        onChange={(e) => handleCommuneChange(e.target.value || null)}
-        value={selectedCommune || ""}
-        disabled={loading || !regionGeoJSON}
-        className="selector">
-        <option value="">Todas las comunas</option>
-        {communes.map((commune) => (
-          <option key={commune.code} value={commune.code}>
-            {commune.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      onChange={(e) => handleCommuneChange(e.target.value || null)}
+      value={selectedCommune || ""}
+      disabled={loading || !regionGeoJSON}
+      className="w-full px-3 py-2 bg-slate-700 text-gray-200 border border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm placeholder-slate-400">
+      <option value="">Todas las comunas</option>
+      {communes.map((commune) => (
+        <option key={commune.code} value={commune.code}>
+          {commune.name}
+        </option>
+      ))}
+    </select>
   );
 };
