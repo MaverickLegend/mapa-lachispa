@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import { JuntasVecinosLayer } from "./JuntasVecinosLayer";
 
 export const MapView = () => {
-  const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, juntasVecinos, selectedCommune } =
+  const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, juntasVecinos, selectedCommune, searchPosition } =
     useMapStore();
 
   return (
@@ -46,6 +46,19 @@ export const MapView = () => {
             </Popup>
           </Marker>
         )}
+
+        {searchPosition && (
+          <Marker position={searchPosition as LatLngExpression}>
+            <Popup>
+              Dirección buscada
+              <br />
+              Lat: {searchPosition[0].toFixed(4)}
+              <br />
+              Lon: {searchPosition[1].toFixed(4)}
+            </Popup>
+          </Marker>
+        )}
+
       </MapContainer>
     </div>
   );

@@ -19,6 +19,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   selectedCommuneData: null,
   selectedUnidadVecinalData: null,
   filtroNombreJJVV: "",
+  searchPosition: null,
 
   setSelectedCommune: (commune) => set({ selectedCommune: commune, selectedUnidadVecinal: null }),
   setSelectedUnidadVecinal: (uv) => set({ selectedUnidadVecinal: uv }),
@@ -27,6 +28,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   setSelectedCommuneData: (data) => set({ selectedCommuneData: data }),
   setSelectedUnidadVecinalData: (data) => set({ selectedUnidadVecinalData: data }),
   setSelectedJuntasVecinos: (data) => set({ juntasVecinos: data }),
+  setSearchPosition: (pos) => set({ searchPosition: pos }),
 
   setRegionGeoJSON: (geoJSON) =>
     set((state) => ({

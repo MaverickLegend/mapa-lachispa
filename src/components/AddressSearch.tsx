@@ -1,18 +1,49 @@
 import { useState } from "react";
 import { useMapStore } from "../store/useMapStore";
+import * as turf from "@turf/turf";
 
 export const AddressSearch = () => {
   const [query, setQuery] = useState("");
-  const { setPosition } = useMapStore();
+  const {
+    setPosition,
+    setSearchPosition,
+    setSelectedUnidadVecinal,
+    regionGeoJSON
+  } = useMapStore();
+  
 
   const handleSearch = async () => {
-    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+    if (!query.trim()) return;
+
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`
+    );
     const data = await res.json();
     if (data.length > 0) {
       const { lat, lon } = data[0];
-      const newPos = [parseFloat(lat), parseFloat(lon)];
-      console.log(newPos);
-      setPosition(newPos); // actualiza el centro del mapa
+      const newPos: [number, number] = [parseFloat(lat), parseFloat(lon)];
+      setPosition(newPos);         // centra el mapa
+      setSearchPosition(newPos);   // guarda el pin
+
+      if (regionGeoJSON) {
+        const point = turf.point([lon, lat]); 
+        const foundUV = regionGeoJSON.features.find((feature) =>
+          turf.booleanPointInPolygon(point, feature as turf.helpers.Polygon)
+        );
+
+        if (foundUV) {
+          const nombreUV = foundUV.properties?.nombre || "UV sin nombre";
+          setSelectedUnidadVecinal(nombreUV);
+        } else {
+          setSelectedUnidadVecinal(null); 
+        }
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
     }
   };
 
@@ -23,9 +54,9 @@ export const AddressSearch = () => {
         placeholder="Busca tu dirección..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        color="red"
+        onKeyDown={handleKeyDown}
+        className="w-full px-3 py-2 bg-slate-700 text-gray-200 border border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm placeholder-slate-400"
       />
-      <button onClick={handleSearch}>Buscar</button>
     </div>
   );
 };
