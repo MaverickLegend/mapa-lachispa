@@ -4,6 +4,8 @@ import { useMapStore } from "../store/useMapStore";
 import { MapGeoJson } from "./MapGeoJson";
 import "leaflet/dist/leaflet.css";
 import { JuntasVecinosLayer } from "./JuntasVecinosLayer";
+import { MapFlyToSearch } from "./MapFlyToSearch";
+
 
 export const MapView = () => {
   const { selectedRegion, regionGeoJSON, position, selectedUnidadVecinal, juntasVecinos, selectedCommune, searchPosition } =
@@ -59,6 +61,7 @@ export const MapView = () => {
           </Marker>
         )}
 
+        <MapFlyToSearch />
       </MapContainer>
     </div>
   );
