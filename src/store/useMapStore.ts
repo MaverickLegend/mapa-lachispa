@@ -84,6 +84,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   hoveredFeature: null,
   geoJsonVersion: 0,
   filtroNombreJJVV: "",
+<<<<<<< HEAD
   regionRawData: null as RegionGeoData | null,
   // provincias: [],
   // comunas: [],
@@ -91,15 +92,26 @@ export const useMapStore = create<MapStore>((set, get) => ({
   demographicData: null,
   pieData: [],
   barData: [],
+=======
+  searchPosition: null,
+>>>>>>> 5c072b6a58c9779fd9fd53cce7d5a7c99ef28b43
 
   setSelectedProvince: (province) =>
     set({ selectedProvince: province, selectedCommune: null, selectedUnidadVecinal: null }),
   setSelectedCommune: (commune: Comuna | null) => set({ selectedCommune: commune, selectedUnidadVecinal: null }),
   setSelectedUnidadVecinal: (uv: UnidadVecinal | null) => set({ selectedUnidadVecinal: uv }),
   setHoveredFeature: (feature) => set({ hoveredFeature: feature }),
+<<<<<<< HEAD
   setJuntasVecinos: (data) => set({ juntasVecinos: data, filteredJuntasVecinos: data }),
   setFilteredJuntasVecinos: (juntas) => set({ filteredJuntasVecinos: juntas }),
   setSelectedJuntaVecinal: (junta) => set({ selectedJuntaVecinal: junta }),
+=======
+  setCommuneList: (communes) => set({ communeList: communes }),
+  setSelectedCommuneData: (data) => set({ selectedCommuneData: data }),
+  setSelectedUnidadVecinalData: (data) => set({ selectedUnidadVecinalData: data }),
+  setSelectedJuntasVecinos: (data) => set({ juntasVecinos: data }),
+  setSearchPosition: (pos) => set({ searchPosition: pos }),
+>>>>>>> 5c072b6a58c9779fd9fd53cce7d5a7c99ef28b43
 
   setRegionGeoJSON: (geoJSON) =>
     set((state) => ({
