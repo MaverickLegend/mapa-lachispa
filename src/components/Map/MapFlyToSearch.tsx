@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
-import { useMapStore } from "../store/useMapStore";
+import { useMapStore } from "../../store/useMapStore";
 
 export const MapFlyToSearch = () => {
   const map = useMap();

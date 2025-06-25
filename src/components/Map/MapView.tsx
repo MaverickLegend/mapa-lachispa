@@ -6,6 +6,7 @@ import { GeoJsonFeatures } from "./GeoJsonFeatures";
 import "leaflet/dist/leaflet.css";
 import { JuntasVecinosLayer } from "./JuntasVecinosLayer";
 import { Loader } from "../common/Loader";
+import { MapFlyToSearch } from "./MapFlyToSearch";
 
 // Componente interno que registra la instancia del mapa en el store
 const MapRegistrar = () => {
@@ -33,6 +34,8 @@ export const MapView = () => {
   const juntasVecinos = useMapStore((state) => state.juntasVecinos);
   const selectedCommune = useMapStore((state) => state.selectedCommune);
   const loading = useMapStore((state) => state.loading);
+  const searchPosition = useMapStore((state) => state.searchPosition);
+
 
   return (
     <div className="map-container">
@@ -75,6 +78,22 @@ export const MapView = () => {
             </Popup>
           </Marker>
         )}
+
+        {/* Buscador de dirección */}
+        {searchPosition && (
+          <Marker position={searchPosition as LatLngExpression}>
+            <Popup>
+              Dirección buscada
+              <br />
+              Lat: {searchPosition[0].toFixed(4)}
+              <br />
+              Lon: {searchPosition[1].toFixed(4)}
+            </Popup>
+          </Marker>
+        )}
+
+        <MapFlyToSearch />
+
       </MapContainer>
     </div>
   );

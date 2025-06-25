@@ -12,6 +12,7 @@ import type {
 
 // Interfaz para el store del mapa
 export interface MapStore {
+  searchPosition: any;
   regionList: RegionIndexEntry[];
   regionGeoJSON: UnidadVecinalGeoJSON | null;
   selectedRegion: RegionIndexEntry | null;
@@ -57,6 +58,7 @@ export interface MapStore {
   setFiltroNombreJJVV: (filtro: string) => void;
   setFilteredJuntasVecinos: (juntas: JuntaVecinal[]) => void;
   setSelectedJuntaVecinal: (junta: JuntaVecinal | null) => void;
+  setSearchPosition: (position: [number, number]) => void;
   getFilteredJuntasVecinos: () => JuntaVecinal[];
 
   // Métodos para manipular el mapa directamente
