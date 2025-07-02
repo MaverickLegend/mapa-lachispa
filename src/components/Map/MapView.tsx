@@ -8,6 +8,7 @@ import { JuntasVecinosLayer } from "./JuntasVecinosLayer";
 import { Loader } from "../common/Loader";
 import { MapFlyToSearch } from "./MapFlyToSearch";
 
+
 // Componente interno que registra la instancia del mapa en el store
 const MapRegistrar = () => {
   const map = useMap();
@@ -35,6 +36,8 @@ export const MapView = () => {
   const selectedCommune = useMapStore((state) => state.selectedCommune);
   const loading = useMapStore((state) => state.loading);
   const searchPosition = useMapStore((state) => state.searchPosition);
+  const searchAddress = useMapStore((state) => state.searchAddress);
+
 
 
   return (
@@ -83,11 +86,9 @@ export const MapView = () => {
         {searchPosition && (
           <Marker position={searchPosition as LatLngExpression}>
             <Popup>
-              Dirección buscada
+              <strong>📍 Dirección:</strong>
               <br />
-              Lat: {searchPosition[0].toFixed(4)}
-              <br />
-              Lon: {searchPosition[1].toFixed(4)}
+              {searchAddress || "Dirección no disponible"}
             </Popup>
           </Marker>
         )}

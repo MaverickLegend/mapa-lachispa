@@ -90,6 +90,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   pieData: [],
   barData: [],
   searchPosition: null,
+  searchAddress: null,
 
   setSelectedProvince: (province) =>
     set({ selectedProvince: province, selectedCommune: null, selectedUnidadVecinal: null }),
@@ -100,6 +101,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
   setFilteredJuntasVecinos: (juntas) => set({ filteredJuntasVecinos: juntas }),
   setSelectedJuntaVecinal: (junta) => set({ selectedJuntaVecinal: junta }),
   setSearchPosition: (pos: any) => set({ searchPosition: pos }),
+  setSearchAddress: (address: string) => set({ searchAddress: address }),
 
   setRegionGeoJSON: (geoJSON) =>
     set((state) => ({
