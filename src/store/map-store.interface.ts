@@ -12,7 +12,6 @@ import type {
 
 // Interfaz para el store del mapa
 export interface MapStore {
-  searchPosition: any;
   regionList: RegionIndexEntry[];
   regionGeoJSON: UnidadVecinalGeoJSON | null;
   selectedRegion: RegionIndexEntry | null;
