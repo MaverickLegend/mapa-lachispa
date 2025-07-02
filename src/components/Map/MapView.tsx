@@ -15,7 +15,7 @@ const MapRegistrar = () => {
 
   // Cuando el componente se monta, guardar la referencia al mapa
   useEffect(() => {
-    console.log('Registrando mapa en store');
+    console.log("Registrando mapa en store");
     setMapInstance(map);
     return () => {
       // Al desmontar, limpiar la referencia
@@ -79,21 +79,7 @@ export const MapView = () => {
           </Marker>
         )}
 
-        {/* Buscador de dirección */}
-        {searchPosition && (
-          <Marker position={searchPosition as LatLngExpression}>
-            <Popup>
-              Dirección buscada
-              <br />
-              Lat: {searchPosition[0].toFixed(4)}
-              <br />
-              Lon: {searchPosition[1].toFixed(4)}
-            </Popup>
-          </Marker>
-        )}
-
         <MapFlyToSearch />
-
       </MapContainer>
     </div>
   );

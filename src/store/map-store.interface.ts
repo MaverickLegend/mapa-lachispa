@@ -29,11 +29,9 @@ export interface MapStore {
   selectedJuntaVecinal: JuntaVecinal | null;
   filtroNombreJJVV: string;
   regionRawData: RegionGeoData | null;
-  // provincias: Provincia[];
-  // comunas: Comuna[];
-  // unidadesVecinales: UnidadVecinal[];  
   pieData: any[];
   barData: any[];
+  searchPosition: [number, number] | null;
 
   // Getters
 
@@ -41,6 +39,7 @@ export interface MapStore {
   getComunas: () => Comuna[];
   getUnidadesVecinales: () => UnidadVecinal[];
   getFilteredUVFeatures: () => UnidadVecinalFeature[];
+  getFilteredJuntasVecinos: () => JuntaVecinal[];
 
   // Setters
 
@@ -58,8 +57,7 @@ export interface MapStore {
   setFiltroNombreJJVV: (filtro: string) => void;
   setFilteredJuntasVecinos: (juntas: JuntaVecinal[]) => void;
   setSelectedJuntaVecinal: (junta: JuntaVecinal | null) => void;
-  setSearchPosition: (position: [number, number]) => void;
-  getFilteredJuntasVecinos: () => JuntaVecinal[];
+  setSearchPosition: (pos: [number, number] | null) => void;
 
   // Métodos para manipular el mapa directamente
   setMapInstance: (map: any) => void;

@@ -8,7 +8,7 @@ export const MapFlyToSearch = () => {
 
   useEffect(() => {
     if (searchPosition) {
-      map.flyTo(searchPosition, 16); 
+      map.flyTo(searchPosition, 16);
     }
   }, [searchPosition]);
 
