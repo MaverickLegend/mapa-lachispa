@@ -40,5 +40,6 @@ export const AddressSearch = () => {
       <button className="btn btn-accent join-item" onClick={handleSearch}>
         Buscar
       </button>
+    </div>
   );
 };
