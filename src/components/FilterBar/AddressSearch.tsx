@@ -28,15 +28,17 @@ export const AddressSearch = () => {
   };
 
   return (
-    <div className="selector-container">
+    <div className="join w-full">
       <input
-        type="text"
+        type="input"
         placeholder="Busca tu dirección..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
         className="w-full px-3 py-2 bg-slate-700 text-gray-200 border border-slate-600 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm placeholder-slate-400 join-item input"
       />
-    </div>
+      <button className="btn btn-accent join-item" onClick={handleSearch}>
+        Buscar
+      </button>
   );
 };
