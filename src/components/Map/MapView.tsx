@@ -38,8 +38,6 @@ export const MapView = () => {
   const searchPosition = useMapStore((state) => state.searchPosition);
   const searchAddress = useMapStore((state) => state.searchAddress);
 
-
-
   return (
     <div className="map-container">
       {/* Loader para mostrar mientras se cargan los datos */}

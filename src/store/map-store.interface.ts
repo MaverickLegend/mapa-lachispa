@@ -8,7 +8,7 @@ import type {
   Provincia,
   DatosDemograficos,
   JuntaVecinal,
-} from "../types/region-selector.inteface";
+} from "../types/interfaces";
 
 // Interfaz para el store del mapa
 export interface MapStore {
@@ -31,7 +31,7 @@ export interface MapStore {
   pieData: any[];
   barData: any[];
   searchPosition: [number, number] | null;
-  searchAddress: string  | null;
+  searchAddress: string | null;
 
   // Getters
 

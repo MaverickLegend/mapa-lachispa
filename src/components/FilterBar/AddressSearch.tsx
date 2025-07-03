@@ -3,7 +3,7 @@ import { useMapStore } from "../../store/useMapStore";
 
 export const AddressSearch = () => {
   const [query, setQuery] = useState("");
-  const { setPosition, setSearchPosition, setSearchAddress} = useMapStore();
+  const { setPosition, setSearchPosition, setSearchAddress } = useMapStore();
 
   const handleSearch = async () => {
     if (!query.trim()) return;
