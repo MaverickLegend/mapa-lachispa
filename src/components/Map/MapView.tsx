@@ -8,6 +8,7 @@ import { JuntasVecinosLayer } from "./JuntasVecinosLayer";
 import { Loader } from "../common/Loader";
 import { MapFlyToSearch } from "./MapFlyToSearch";
 
+
 // Componente interno que registra la instancia del mapa en el store
 const MapRegistrar = () => {
   const map = useMap();
@@ -91,6 +92,7 @@ export const MapView = () => {
         )}
 
         <MapFlyToSearch />
+
       </MapContainer>
     </div>
   );
